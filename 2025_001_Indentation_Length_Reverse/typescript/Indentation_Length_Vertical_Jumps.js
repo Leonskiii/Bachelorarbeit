@@ -48,7 +48,9 @@ let experiment_configuration_function = (writer) => {
             let target_condition_string = if_statement.target_condition_string(target_expression_number);
             let html_string = convert_string_to_html_string(if_statement.print_string(length));
             let correct_answer = if_statement.return_string(target_expression_number);
-            html_string = html_string.replace("\(" + target_condition_string + "\)", "<span style=\"background-color:red\">(" + target_condition_string + ")</span>");
+            console.log(html_string);
+            let target_return_value = if_statement.target_return_value(target_expression_number);
+            html_string = html_string.replace("}&nbsp;" + target_return_value + "<br/>", "}&nbsp;<span style=\"background-color:red\">" + target_return_value + "</span><br/>");
             t.expected_answer = correct_answer;
             t.do_print_task = () => {
                 writer.clear_stage();
@@ -59,8 +61,8 @@ let experiment_configuration_function = (writer) => {
             };
             t.do_print_after_task_information = () => {
                 writer.clear_stage();
-                writer.print_error_string_on_stage(writer.convert_string_to_html_string("The correct answer was: " + t.expected_answer + "\n\n" +
-                    "In case, you feel not concentrated enough, make a short break.\n\n" +
+                writer.print_error_string_on_stage(writer.convert_string_to_html_string("The corresponding if-condition was: " + target_condition_string + "\n\n" +
+                    "In case you feel not concentrated enough, make a short break.\n\n" +
                     "Press [Enter] to go on. "));
             };
         }
