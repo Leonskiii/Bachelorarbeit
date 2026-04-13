@@ -1,0 +1,8 @@
+Was fällt auf?
+
+Ich hab weniger Fehler gemacht als vorher
+
+Das nun von der Klammer an makiert ist, macht das suchen der richtigen if-clause viel einfacher
+
+Ich muss aufjedenfall mal die if Bedingung komplett makieren und gucken ob dann auch die richtige Zahl finden einfacher wird
+
