@@ -1,0 +1,9 @@
+Was fällt auf?
+
+Ich hab mehr Fehler gemacht vorallem halt in der Mitte
+
+Das Leerzeichen nach der } macht es super schwer, da wenn die Zahl in der gleichen Höhe steht wie die folgende if Bedingung man das leicht verwchseln kann.
+
+Bei hoher length,hingegen ist es sehr einfach, man sieht es meistens auf anhieb
+
+Was kann man besser machen? Eventuell die } mit makieren.
