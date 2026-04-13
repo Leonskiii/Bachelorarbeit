@@ -1,19 +1,19 @@
-import {BROWSER_EXPERIMENT} from "./Nof1/modules/Experimentation/Browser_Output_Writer.js";
+import {BROWSER_EXPERIMENT} from "../../N_of_1_Experiments/modules/Experimentation/Browser_Output_Writer.js";
 import {
     alternatives,
     Experiment_Output_Writer, keys, random_array_element, random_integer_up_to_excluding, Reaction_Time,
     SET_SEED, Standard_Post_Questionnaire
-} from "./Nof1/modules/Experimentation/Experimentation.js";
-import {Task} from "./Nof1/modules/Experimentation/Task.js";
+} from "../../N_of_1_Experiments/modules/Experimentation/Experimentation.js";
+import {Task} from "../../N_of_1_Experiments/modules/Experimentation/Task.js";
 import {generate_If_Statement, Nested_Ifs, Term} from "./Generate_Code.js";
-import {convert_string_to_html_string} from "./Nof1/modules/utils/Utils.js";
+import {convert_string_to_html_string} from "../../N_of_1_Experiments/modules/utils/Utils.js";
 import {
     finish_pages,
     intro_pages,
     pre_run_experiment_instructions,
     pre_run_training_instructions
 } from "./Indentation_Length_Vertical_Jumps_Text.js";
-import {Nouns} from "./Nof1/modules/Words/Nouns.js";
+import {Nouns} from "../../N_of_1_Experiments/modules/Words/Nouns.js";
 
 let SEED = "43";
 
@@ -93,7 +93,7 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
             // writer.print_html_on_stage();
         };
 
-        t.print_feedback = () => {
+        (t as any).print_feedback = () => {
             writer.clear_stage();
             writer.print_string_on_stage("<p> Should this task be considered or were you not concentrated enough (\"y\"= everthing fine, \"n\"= something went wrong)</p>");
         }
