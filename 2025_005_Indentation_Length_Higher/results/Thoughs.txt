@@ -1,0 +1,4 @@
+Die Mitte ist unmöglich, bzw braucht super lange bei wenig length, hier besteht aber auch nochmal bedarf das zu wiederholen wenn das ganze if Statement rot ist denke ich.
+
+Nur gucken reicht nicht um sicher zu sein, und zählen braucht lange und man kann sich verzählen/Zahl vergessen usw.
+

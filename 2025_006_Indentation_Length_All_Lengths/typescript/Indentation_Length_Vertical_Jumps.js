@@ -31,14 +31,14 @@ let experiment_configuration_function = (writer) => {
         finish_pages: [writer.string_page_command(finish_pages())],
         layout: [
             { variable: "Length", treatments: ["2", "4", "6", "8"] },
-            { variable: "Level", treatments: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"] },
+            { variable: "Level", treatments: ["1", "2", "3", "4", "5"] },
             { variable: "Distance_from_Center", treatments: ["_computed_"] }
         ],
-        repetitions: 4,
+        repetitions: 5,
         measurement: Reaction_Time(keys(["1"])),
         task_configuration: (t) => {
-            let center = 8;
-            let nesting_depth = center * 2 - 1;
+            let center = 5;
+            let nesting_depth = center * 2 - 5;
             let length = parseInt(t.treatment_value("Length"));
             let level = parseInt(t.treatment_value("Level"));
             let target_expression_number = parseInt(t.treatment_value("Level"));
