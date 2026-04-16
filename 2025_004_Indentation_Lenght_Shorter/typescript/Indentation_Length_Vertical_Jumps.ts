@@ -55,9 +55,9 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
     measurement: Reaction_Time(keys(["1"])),
 
     task_configuration:    (t:Task) => {
-        let center = 5;
+        let center = 3;
 
-        let nesting_depth = center * 2 - 5;
+        let nesting_depth = center * 2 - 1;
 
         let length = parseInt(t.treatment_value("Length"));
         let level = parseInt(t.treatment_value("Level"));
