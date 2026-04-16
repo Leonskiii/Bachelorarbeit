@@ -48,7 +48,7 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
 
     layout: [
         { variable: "Length",  treatments: ["2", "4", "6", "8"]},
-        { variable: "Level",  treatments: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]},
+        { variable: "Level",  treatments: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]},
         { variable: "Distance_from_Center",  treatments: ["_computed_"]},
         { variable: "Feedback",  treatments: ["_to_be_written_"]}
     ],
@@ -65,7 +65,7 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
     task_feedback: ["y", "n"],
 
     task_configuration:    (t:Task) => {
-        let center = 5;
+        let center = 8;
 
         let nesting_depth = center * 2 - 1;
 
@@ -98,14 +98,9 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
             writer.print_string_on_stage("<p> Should this task be considered or were you not concentrated enough (\"y\"= everthing fine, \"n\"= something went wrong)</p>");
         }
 
-        let correct_answer = if_statement.return_string(target_expression_number); // z.B. "7"
-        let target_word = target_condition_string; // bereits das Wort ohne Zahl, z.B. "mark"
-
-        t.expected_answer = correct_answer; // CSV speichert den return value
-
         t.do_print_pre_task = () => {
             writer.clear_stage();
-            writer.print_html_on_stage("<h1>" + correct_answer + "</h1>"); // Zahl anzeigen
+            writer.print_html_on_stage("<h1>" +  target_condition_string + "</h1>");
         }
 
         t.accepts_answer = (s) => {
@@ -117,6 +112,8 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
         t.do_print_after_task_information = () => {
             writer.clear_stage();
             writer.print_error_string_on_stage(writer.convert_string_to_html_string(
+                "The correct answer was: " + t.expected_answer + "\n\n" +
+                "In case, you feel not concentrated enough, make a short break.\n\n" +
                 "Press [Enter] to go on. "));
         }
     }

@@ -31,7 +31,7 @@ let experiment_configuration_function = (writer) => {
         post_questionnaire: Standard_Post_Questionnaire(),
         finish_pages: [writer.string_page_command(finish_pages())],
         layout: [
-            { variable: "Length", treatments: ["2", "4", "6", "8"] },
+            { variable: "Length", treatments: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
             { variable: "Level", treatments: ["1", "2", "3", "4", "5", "6", "7", "8", "9"] },
             { variable: "Distance_from_Center", treatments: ["_computed_"] },
             { variable: "Feedback", treatments: ["_to_be_written_"] }
@@ -68,12 +68,9 @@ let experiment_configuration_function = (writer) => {
                 writer.clear_stage();
                 writer.print_string_on_stage("<p> Should this task be considered or were you not concentrated enough (\"y\"= everthing fine, \"n\"= something went wrong)</p>");
             };
-            let correct_answer = if_statement.return_string(target_expression_number); // z.B. "7"
-            let target_word = target_condition_string; // bereits das Wort ohne Zahl, z.B. "mark"
-            t.expected_answer = correct_answer; // CSV speichert den return value
             t.do_print_pre_task = () => {
                 writer.clear_stage();
-                writer.print_html_on_stage("<h1>" + correct_answer + "</h1>"); // Zahl anzeigen
+                writer.print_html_on_stage("<h1>" + target_condition_string + "</h1>");
             };
             t.accepts_answer = (s) => {
                 return true;
@@ -81,7 +78,9 @@ let experiment_configuration_function = (writer) => {
             // t.requires_task_feedback = () => true;
             t.do_print_after_task_information = () => {
                 writer.clear_stage();
-                writer.print_error_string_on_stage(writer.convert_string_to_html_string("Press [Enter] to go on. "));
+                writer.print_error_string_on_stage(writer.convert_string_to_html_string("The correct answer was: " + t.expected_answer + "\n\n" +
+                    "In case, you feel not concentrated enough, make a short break.\n\n" +
+                    "Press [Enter] to go on. "));
             };
         }
     };

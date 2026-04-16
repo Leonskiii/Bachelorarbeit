@@ -6,8 +6,8 @@ export declare abstract class Words {
     pull_random_word(): string;
     pull_n_random_words(number_of_words: number): string[];
     pull_n_random_formatted_words(number_of_words: number, formatter: ((string: any) => string)): string[];
-    max_word_length(): number;
-    min_word_length(): number;
+    max_word_length(): any;
+    min_word_length(): any;
     static capitalizeFirstLetter_formatter: (aString: string) => string;
     static lowerCaseFirstLetter_formatter: (aString: string) => string;
     generate_composite_identifier_of_length(length: number): any;
