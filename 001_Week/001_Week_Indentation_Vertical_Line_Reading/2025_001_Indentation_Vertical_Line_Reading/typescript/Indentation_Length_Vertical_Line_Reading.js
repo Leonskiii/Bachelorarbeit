@@ -1,9 +1,9 @@
-import { BROWSER_EXPERIMENT } from "../../../../../../N_of_1_Experiments/modules/Experimentation/Browser_Output_Writer.js";
-import { keys, Reaction_Time, SET_SEED, Standard_Post_Questionnaire } from "../../../../../../N_of_1_Experiments/modules/Experimentation/Experimentation.js";
+import { BROWSER_EXPERIMENT } from "../../../../N_of_1_Experiments/modules/Experimentation/Browser_Output_Writer.js";
+import { keys, Reaction_Time, SET_SEED, Standard_Post_Questionnaire } from "../../../../N_of_1_Experiments/modules/Experimentation/Experimentation.js";
 import { generate_If_Statement, Nested_Ifs } from "./Generate_Code.js";
-import { convert_string_to_html_string } from "../../../../../../N_of_1_Experiments/modules/utils/Utils.js";
+import { convert_string_to_html_string } from "../../../../N_of_1_Experiments/modules/utils/Utils.js";
 import { finish_pages, intro_pages, pre_run_experiment_instructions, pre_run_training_instructions } from "./Indentation_Length_Vertical_Jumps_Text.js";
-import { Nouns } from "../../../../../../N_of_1_Experiments/modules/Words/Nouns.js";
+import { Nouns } from "../../../../N_of_1_Experiments/modules/Words/Nouns.js";
 let SEED = "43";
 SET_SEED(SEED);
 export function set_if_conditions_on_nous_each_starting_with_different_letter(if_statement) {
@@ -59,10 +59,10 @@ let experiment_configuration_function = (writer) => {
             t.has_pre_task_description = true;
             t.has_post_task_question = true;
             t.expected_answer = target_expression_number.toString();
-            t.do_print_task = () => {
+            let correct_answer = if_statement.return_string(target_expression_number);
+            t.do_print_pre_task = () => {
                 writer.clear_stage();
-                writer.print_string_on_stage("<div class='sourcecode'>" + html_string + "</div>");
-                // writer.print_html_on_stage();
+                writer.print_html_on_stage("<h1>" + correct_answer + "</h1>");
             };
             t.print_feedback = () => {
                 writer.clear_stage();
