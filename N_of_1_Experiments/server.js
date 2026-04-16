@@ -1,3 +1,4 @@
+"use strict";
 // import {IncomingMessage} from "node:http";
 // import {Client} from 'pg';
 // import {ServerResponse} from "node:http";

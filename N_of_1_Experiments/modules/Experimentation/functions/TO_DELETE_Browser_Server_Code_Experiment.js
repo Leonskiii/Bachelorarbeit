@@ -1,3 +1,4 @@
+"use strict";
 // import {Code_Experiment_Definition, create_code_experiment_execution} from "../Code_Experiment_Definition.js";
 // import {Task} from "./../Task.js";
 // import {add_upload_push_button, key_event_string, save_file_in_html, upload_experiment_to_server} from "../../Utils.js";
