@@ -1,4 +1,3 @@
-"use strict";
 // import * as Utils from "../Utils.js";
 // import {AUTOMATA_OUTPUT_OBJECT_FORMAT} from "./Automata_IO.js";
 // import {Treatment} from "../Experimentation/Treatment.js";

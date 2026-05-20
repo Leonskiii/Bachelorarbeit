@@ -1,4 +1,3 @@
-"use strict";
 //
 // export enum AUTOMATA_OUTPUT_OBJECT_FORMAT {
 //     TEXT, CODE, HTML, CODE_IN_HTML,HTML_NODE

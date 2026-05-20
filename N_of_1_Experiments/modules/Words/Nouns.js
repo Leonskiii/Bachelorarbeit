@@ -1,5 +1,15 @@
 import { Words } from "./Words.js";
 export class Nouns extends Words {
+    get_word_of_length(target_length) {
+        // Alle Wörter mit exakt der Ziellänge
+        const exact = Nouns.static_words.filter(w => w.length === target_length);
+        if (exact.length > 0) {
+            return exact[Math.floor(Math.random() * exact.length)];
+        }
+        // Fallback: nächstmögliche Länge
+        const sorted = Nouns.static_words.slice().sort((a, b) => Math.abs(a.length - target_length) - Math.abs(b.length - target_length));
+        return sorted[0];
+    }
     constructor() {
         super();
         this.words = Nouns.static_words.slice();
@@ -181,7 +191,12 @@ Nouns.static_words = [
     "word", "work", "worm", "wound", "wren",
     "wrench", "wrist", "writer", "writing", "yak",
     "yam", "yard", "yarn", "year", "yoke",
-    "zebra", "zephyr", "zinc", "zipper", "zoo"
+    "zebra", "zephyr", "zinc", "zipper", "zoo",
+    "at", "be", "by", "do", "go",
+    "he", "if", "in", "is", "it",
+    "me", "my", "no", "of", "on",
+    "or", "so", "to", "up", "us",
+    "we", "an", "as", "ox", "ax"
 ];
 let n = new Nouns();
 let ws = n.replace_letters("lo", 2);
