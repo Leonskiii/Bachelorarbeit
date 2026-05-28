@@ -15,26 +15,12 @@ import {Nouns} from "../../../../N_of_1_Experiments/modules/Words/Nouns.js";
 let SEED = "42";
 SET_SEED(SEED);
 
-export function set_if_conditions_on_nous_each_starting_with_different_letter(if_statement: Term) {
-    let starting_letter: string[] = [];
-    const nouns = new Nouns();
-    while (if_statement instanceof Nested_Ifs) {
-        let next_word = nouns.get_random_word();
-        while (starting_letter.includes(next_word[0])) next_word = nouns.get_random_word();
-        starting_letter.push(next_word[0]);
-        if_statement.condition_string = next_word;
-        if_statement = if_statement.then_branch;
-    }
+function random_int(min: number, max: number): number {
+    return Math.floor(min + Math.random() * (max - min + 1));
 }
 
-function set_condition_at_level(if_stmt: Term, target_level: number, condition: string) {
-    let current = if_stmt;
-    let level = 1;
-    while (current instanceof Nested_Ifs) {
-        if (level === target_level) { current.condition_string = condition; return; }
-        current = current.then_branch;
-        level++;
-    }
+function random_in_range(min: number, max: number): number {
+    return min + Math.random() * (max - min);
 }
 
 function get_word_of_total_length(nouns: Nouns, target_length: number): string {
@@ -48,8 +34,41 @@ function get_word_of_total_length(nouns: Nouns, target_length: number): string {
     return result.slice(0, target_length);
 }
 
-function random_in_range(min: number, max: number): number {
-    return min + Math.random() * (max - min);
+// Alle Conditions auf ~target_length setzen, jedes Wort mit einzigartigem Anfangsbuchstaben
+export function set_if_conditions_unique_letters_similar_length(if_statement: Term, target_length: number) {
+    const used_letters: string[] = [];
+    const nouns = new Nouns();
+    while (if_statement instanceof Nested_Ifs) {
+        const len  = Math.max(2, target_length + random_int(-2, 2));
+        let   word = get_word_of_total_length(nouns, len);
+        let   tries = 0;
+        while (used_letters.includes(word[0]) && tries < 20) {
+            word = get_word_of_total_length(nouns, Math.max(2, target_length + random_int(-2, 2)));
+            tries++;
+        }
+        used_letters.push(word[0]);
+        if_statement.condition_string = word;
+        if_statement = if_statement.then_branch;
+    }
+}
+
+function set_condition_at_level(if_stmt: Term, target_level: number, condition: string) {
+    let current = if_stmt;
+    let lvl = 1;
+    while (current instanceof Nested_Ifs) {
+        if (lvl === target_level) { current.condition_string = condition; return; }
+        current = current.then_branch;
+        lvl++;
+    }
+}
+
+function word_exists_in_if_statement(if_stmt: Term, word: string): boolean {
+    let current = if_stmt;
+    while (current instanceof Nested_Ifs) {
+        if (current.condition_string === word) return true;
+        current = current.then_branch;
+    }
+    return false;
 }
 
 function get_overlap(marked_start: number, marked_end: number, other_start: number, other_end: number): number {
@@ -68,14 +87,14 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
     finish_pages:                    [writer.string_page_command(finish_pages())],
 
     layout: [
-        { variable: "Length",                treatments: ["6", "10", "14"] },
-        { variable: "Level",                 treatments: ["2", "3", "4", "5", "6", "7", "8"] },
+        { variable: "Length",               treatments: ["6", "10", "14"] },
+        { variable: "Level",                treatments: ["2", "3", "4", "5", "6", "7", "8"] },
         { variable: "Overlap_Target",        treatments: ["1_0-25", "2_26-50", "3_51-75"] },
-        { variable: "Distance_from_Center",  treatments: ["_computed_"] },
-        { variable: "Marked_Word_Length",    treatments: ["_computed_"] },
-        { variable: "Overlap_Above",         treatments: ["_computed_"] },
+        { variable: "Distance_from_Center", treatments: ["_computed_"] },
+        { variable: "Marked_Word_Length",   treatments: ["_computed_"] },
+        { variable: "Overlap_Above",        treatments: ["_computed_"] },
         { variable: "Overlap_Above_Percent", treatments: ["_computed_"] },
-        { variable: "Overlap_Below",         treatments: ["_computed_"] },
+        { variable: "Overlap_Below",        treatments: ["_computed_"] },
         { variable: "Overlap_Below_Percent", treatments: ["_computed_"] },
     ],
 
@@ -98,15 +117,20 @@ let experiment_configuration_function = (writer: Experiment_Output_Writer) => { 
         const p        = random_in_range(p_min, p_max);
         const wort_len = Math.max(2, Math.round((length - 3) / (1 - p)));
 
-        const above_neighbor_len = wort_len + 2;
-        const below_neighbor_len = wort_len;
-
         const if_statement = generate_If_Statement(length, nesting_depth);
-        set_if_conditions_on_nous_each_starting_with_different_letter(if_statement);
 
-        set_condition_at_level(if_statement, level - 1, get_word_of_total_length(nouns, above_neighbor_len));
-        set_condition_at_level(if_statement, level,     get_word_of_total_length(nouns, wort_len));
-        set_condition_at_level(if_statement, level + 1, get_word_of_total_length(nouns, below_neighbor_len));
+        // Alle Conditions auf ~wort_len setzen – markiertes Wort sticht nicht durch Länge heraus
+        set_if_conditions_unique_letters_similar_length(if_statement, wort_len);
+
+        // Nachbarn mit overlap-spezifischer Länge überschreiben
+        set_condition_at_level(if_statement, level - 1, get_word_of_total_length(nouns, wort_len + 2));
+        set_condition_at_level(if_statement, level + 1, get_word_of_total_length(nouns, wort_len));
+
+        // Markiertes Wort – muss eindeutig sein, also nach den Nachbarn wählen
+        let marked_word = get_word_of_total_length(nouns, wort_len);
+        while (word_exists_in_if_statement(if_statement, marked_word))
+            marked_word = get_word_of_total_length(nouns, wort_len);
+        set_condition_at_level(if_statement, level, marked_word);
 
         const marked_start = (level - 1) * length + 3;
         const marked_end   = marked_start + wort_len;

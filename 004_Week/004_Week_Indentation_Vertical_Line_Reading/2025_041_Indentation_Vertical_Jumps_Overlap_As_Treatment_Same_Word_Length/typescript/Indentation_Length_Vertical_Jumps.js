@@ -6,29 +6,11 @@ import { finish_pages, intro_pages, pre_run_experiment_instructions, pre_run_tra
 import { Nouns } from "../../../../N_of_1_Experiments/modules/Words/Nouns.js";
 let SEED = "42";
 SET_SEED(SEED);
-export function set_if_conditions_on_nous_each_starting_with_different_letter(if_statement) {
-    let starting_letter = [];
-    const nouns = new Nouns();
-    while (if_statement instanceof Nested_Ifs) {
-        let next_word = nouns.get_random_word();
-        while (starting_letter.includes(next_word[0]))
-            next_word = nouns.get_random_word();
-        starting_letter.push(next_word[0]);
-        if_statement.condition_string = next_word;
-        if_statement = if_statement.then_branch;
-    }
+function random_int(min, max) {
+    return Math.floor(min + Math.random() * (max - min + 1));
 }
-function set_condition_at_level(if_stmt, target_level, condition) {
-    let current = if_stmt;
-    let level = 1;
-    while (current instanceof Nested_Ifs) {
-        if (level === target_level) {
-            current.condition_string = condition;
-            return;
-        }
-        current = current.then_branch;
-        level++;
-    }
+function random_in_range(min, max) {
+    return min + Math.random() * (max - min);
 }
 function get_word_of_total_length(nouns, target_length) {
     if (target_length <= 0)
@@ -42,8 +24,43 @@ function get_word_of_total_length(nouns, target_length) {
     }
     return result.slice(0, target_length);
 }
-function random_in_range(min, max) {
-    return min + Math.random() * (max - min);
+// Alle Conditions auf ~target_length setzen, jedes Wort mit einzigartigem Anfangsbuchstaben
+export function set_if_conditions_unique_letters_similar_length(if_statement, target_length) {
+    const used_letters = [];
+    const nouns = new Nouns();
+    while (if_statement instanceof Nested_Ifs) {
+        const len = Math.max(2, target_length + random_int(-2, 2));
+        let word = get_word_of_total_length(nouns, len);
+        let tries = 0;
+        while (used_letters.includes(word[0]) && tries < 20) {
+            word = get_word_of_total_length(nouns, Math.max(2, target_length + random_int(-2, 2)));
+            tries++;
+        }
+        used_letters.push(word[0]);
+        if_statement.condition_string = word;
+        if_statement = if_statement.then_branch;
+    }
+}
+function set_condition_at_level(if_stmt, target_level, condition) {
+    let current = if_stmt;
+    let lvl = 1;
+    while (current instanceof Nested_Ifs) {
+        if (lvl === target_level) {
+            current.condition_string = condition;
+            return;
+        }
+        current = current.then_branch;
+        lvl++;
+    }
+}
+function word_exists_in_if_statement(if_stmt, word) {
+    let current = if_stmt;
+    while (current instanceof Nested_Ifs) {
+        if (current.condition_string === word)
+            return true;
+        current = current.then_branch;
+    }
+    return false;
 }
 function get_overlap(marked_start, marked_end, other_start, other_end) {
     return Math.max(0, Math.min(marked_end, other_end) - Math.max(marked_start, other_start));
@@ -83,13 +100,17 @@ let experiment_configuration_function = (writer) => {
                     [0.51, 0.75];
             const p = random_in_range(p_min, p_max);
             const wort_len = Math.max(2, Math.round((length - 3) / (1 - p)));
-            const above_neighbor_len = wort_len + 2;
-            const below_neighbor_len = wort_len;
             const if_statement = generate_If_Statement(length, nesting_depth);
-            set_if_conditions_on_nous_each_starting_with_different_letter(if_statement);
-            set_condition_at_level(if_statement, level - 1, get_word_of_total_length(nouns, above_neighbor_len));
-            set_condition_at_level(if_statement, level, get_word_of_total_length(nouns, wort_len));
-            set_condition_at_level(if_statement, level + 1, get_word_of_total_length(nouns, below_neighbor_len));
+            // Alle Conditions auf ~wort_len setzen – markiertes Wort sticht nicht durch Länge heraus
+            set_if_conditions_unique_letters_similar_length(if_statement, wort_len);
+            // Nachbarn mit overlap-spezifischer Länge überschreiben
+            set_condition_at_level(if_statement, level - 1, get_word_of_total_length(nouns, wort_len + 2));
+            set_condition_at_level(if_statement, level + 1, get_word_of_total_length(nouns, wort_len));
+            // Markiertes Wort – muss eindeutig sein, also nach den Nachbarn wählen
+            let marked_word = get_word_of_total_length(nouns, wort_len);
+            while (word_exists_in_if_statement(if_statement, marked_word))
+                marked_word = get_word_of_total_length(nouns, wort_len);
+            set_condition_at_level(if_statement, level, marked_word);
             const marked_start = (level - 1) * length + 3;
             const marked_end = marked_start + wort_len;
             const above_len = if_statement.target_condition_string(level - 1).length;
