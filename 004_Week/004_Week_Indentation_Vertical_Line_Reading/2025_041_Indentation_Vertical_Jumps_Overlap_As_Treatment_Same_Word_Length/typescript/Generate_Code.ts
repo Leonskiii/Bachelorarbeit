@@ -44,7 +44,7 @@ export class Nested_Ifs extends  Term {
     print_into(array: string[], indentation_depth: number, indentation_length: number) {
         array.push(" ".repeat(indentation_length * indentation_depth) + "if(" + this.condition_string + ") {\n");
         if (this.then_branch instanceof Return) {
-            // then_branch (immer 0) nicht anzeigen
+            // then_branch (immer 0)
             array.push(" ".repeat(indentation_length * indentation_depth + indentation_length) + "\n");
         } else {
             this.then_branch.print_into(array, indentation_depth + 1, indentation_length);
