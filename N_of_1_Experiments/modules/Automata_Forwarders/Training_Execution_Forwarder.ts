@@ -96,21 +96,20 @@ export class Training_Execution_Forwarder extends  Experimentation_Forwarder{
                         let dummy = 1;
                     }),
 
-                from(ESCAPED).to(SHOW_INTRO)
-                    .on("Enter").do(() => {
-                        this.experiment_definition.init_experiment(true);
-                        this.show_intro();
+            from(ESCAPED).to(SHOW_INTRO)
+                .on("Enter").do(() => {
+                this.training_configuration.init_experiment(this.experiment_definition);  // ← auch hier fixen
+                this.show_intro();
+            }),
+
+
+            from(SHOW_OUTRO).to(SHOW_INTRO)
+                .on("Enter")
+                .if(()=> this.training_configuration.can_be_repeated)
+                .do(() => {
+                    this.training_configuration.init_experiment(this.experiment_definition);  // ← fix
+                    this.show_intro();
                 }),
-
-
-                from(SHOW_OUTRO).to(SHOW_INTRO)
-                    .on("Enter")
-                    .if(()=> this.training_configuration.can_be_repeated)
-                    .do(() => {
-                        this.experiment_definition.init_experiment(true);
-                        this.show_intro();
-                    }
-                ),
 
                 from(SHOW_OUTRO).to(EVERYTHING_DONE)
                     .on("E")
