@@ -1,0 +1,15 @@
+Was ist eine gute einrückungstiefe
+
+Das erste Experiment sagt rück so weit wie möglich ein, das andere sag so wenig wie möglich
+
+
+
+code andersrum ausführen, das wird ausgeführt, welche condition schlägt fehl
+
+
+Level verschieben der Experimente, weniger ifs/Level 5 Gedanken über die Aufgaben, makierung ändern, testen testen testen, gut dokumentieren
+
+miara paper lesen, generell Paper suchen lesen
+
+
+Anova, post hoc test (konkrete frage), randmitel, Interaktionseffekte

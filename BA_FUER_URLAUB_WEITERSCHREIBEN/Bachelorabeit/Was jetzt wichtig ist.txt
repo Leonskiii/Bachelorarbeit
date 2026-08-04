@@ -1,0 +1,6 @@
+Was jetzt wichtig ist
+
+Mehr Tests zu Distanz und Density -> distance from Center genauer drüber nachdenken
+
+Wie teste ich Distanz unabhängig von Density
+

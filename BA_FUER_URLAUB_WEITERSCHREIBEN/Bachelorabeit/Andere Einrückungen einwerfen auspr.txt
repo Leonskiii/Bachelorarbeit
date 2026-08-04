@@ -1,0 +1,10 @@
+Andere Einrückungen einwerfen ausprobieren, also wie
+
+untereinander, nebeneinadner
+
+Smalltalk benutzt das so?
+
+Andere einrückungen
+
+Keine konstante?
+

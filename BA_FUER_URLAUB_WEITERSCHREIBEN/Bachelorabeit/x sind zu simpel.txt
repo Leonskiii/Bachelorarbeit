@@ -1,0 +1,19 @@
+
+Gedanken
+
+Weniger dichte lässt die längere einfache Distanz besser erkennen, bzw ist mehr länge eines Leerraums, weniger dichte
+
+Es geht vll auch gar nicht so sehr um eine feste dichte, sondern um den Unterschied der Dichte, dass das gesuchte mehr heraussticht
+
+Dichte vll 2?
+
+Also z.B. 
+
+Muster? Muster hiflt bei Distanz?
+
+Experiment anders rum bauen
+
+erstmal Muster auflösen, guck screenshot
+
+Vertikale Dichte, vorallem nur dichte am ziel z.B. in der if Bedingung
+

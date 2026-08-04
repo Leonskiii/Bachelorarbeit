@@ -1,0 +1,32 @@
+Hey,
+Vielen Dank für deine Teilnahme!
+
+Um das Experiment durchzuführen muss nur die index.html Datei in einem Browser ausgeführt werden (Doppelklick oder Drag und Drop ins Fenster).
+Bitte verwende den Vollbild Modus, da einige Fragen sonst die Bildschirmgrenzen durchbrechen.
+
+
+In diesem Experiment bekommt einen Code angezeigt, und muss später in einem Duplikat nach Fehlern suchen.
+Der angezeigte Code ist entweder rekursiv oder nicht-rekursiv geschrieben.
+Der Code handelt entweder um ein Array, eine Liste, einen Baum, eine Fibonacci Funktion, oder einen Summenfunktion.
+
+Der erste Code Block ist so als korrekt anzusehen. Bitte nimm dir genug Zeit dich mit ihm vertraut zu machen.
+Wenn man in das Textfeld Enter drückt (ohne etwas reinzuschreiben) erscheint ein weiterer Code Block weiter unten.
+Deine Aufgabe ist es, diesen zu lesen, und zu gucken ob dieser nun einen Fehler beinhaltet. Hier läuft die Zeitmessung!
+Die gesuchte Antwort ist "1", wenn sich ein Error eingeschlichen hat, und "0", wenn sich kein Error eingeschlichen hat. (Nicht vergessen mit Enter zu submitten!)
+
+Wichtig:
+Der obere, richtige Code ist zwar noch angezeigt, aber sollte hier nicht mehr angeguckt werden (kein Cross checking!), ich bin nur zu blöd diesen zu verstecken...
+
+Gemessen wird nur die Zeit, ab dem der zweite Code sichtbar ist, bis zum Input von 1 oder 0 (Enter nicht vergessen).
+Der Post-Measurement Text hat hier auch detailierte Beschreibungen, um dir beim Verständnis zu helfen.
+
+
+Bitte mache mindestens die ersten 15 Fragen im Practise Mode, bevor du in das Hauptexperiment wechselst.
+In den ersten 15 sind alle möglichen Fehler vorhanden, und wir wollen große Lerneffekte mittendrin vermeiden.
+
+
+Bei Fragen stehe ich zur Verfügung!
+
+
+Falls du auch ein Experiment bei Dr. Hanenberg gebaut hast und dich wunderst:
+Das Experiment ist auf einer älteren Version der Engine geschrieben, daher kommen die komischen Quirks wie Enter zum submitten, dass ich den OG Code nicht verstecken kann, und dass das Seeding etwas manueller ist.

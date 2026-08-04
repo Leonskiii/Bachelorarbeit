@@ -1,0 +1,39 @@
+
+
+Einrückungen x Methodenaufruf/Anzahl der Codezeilen im Block
+
+if(a) {
+    processOrder();
+    validateInput();
+    saveToDatabase();
+
+    if(b) {
+        processOrder();
+   	validateInput();
+   	saveToDatabase();
+
+        if(c) {
+            processOrder();
+            validateInput();
+            saveToDatabase();
+        } 3
+    }7
+}8
+
+if(a) {
+processOrder();
+validateInput();
+saveToDatabase();
+
+    if(b) {
+    processOrder();
+    validateInput();
+    saveToDatabase();
+
+        if(c) {
+        processOrder();
+        validateInput();
+        saveToDatabase();
+        } 3
+    }7
+}8
